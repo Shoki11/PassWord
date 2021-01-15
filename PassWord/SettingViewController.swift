@@ -28,7 +28,7 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
         
         print(num)
         //保存ボタンを非活性
@@ -58,7 +58,7 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
             inputAd.text = data[num].inputAd // レコード取得
             inputMemo.text = data[num].inputMemo
         }
-        //テキストビューの行間制限
+        ///テキストビューの行間制限
         func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
             let existingLines = inputMemo.text.components(separatedBy: .newlines)//既に存在する改行数
             let newLines = text.components(separatedBy: .newlines)//新規改行数
@@ -89,8 +89,9 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
         
         //********** キーボードの設定　***********//
         
+    /// 各textFieldのキーボードを閉じる
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            // 各textFieldのキーボードを閉じる
+            
             inputTitle.resignFirstResponder()
             inputId.resignFirstResponder()
             inputPass.resignFirstResponder()
@@ -102,9 +103,9 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
         }
         
         
-        
+        ///Viewをtapしたらキーボードを閉じる
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            //Viewをtapしたらキーボードを閉じる
+            
             if (self.inputTitle.isFirstResponder) {
                 self.inputTitle.resignFirstResponder()
             }
@@ -131,7 +132,7 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
         
         // MARK: - Notification
         
-        //      /// Notification発行
+        /// Notification発行
         func configureObserver() {
             let notification = NotificationCenter.default
             notification.addObserver(self, selector: #selector(keyboardWillShow(_:)),
@@ -154,7 +155,7 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
             }
         }
         
-        //      /// キーボードが降りたら画面を戻す
+        /// キーボードが降りたら画面を戻す
         @objc func keyboardWillHide(_ notification: Notification?) {
             if self.activeTextView != nil{
                 guard let duration = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? TimeInterval else { return }
