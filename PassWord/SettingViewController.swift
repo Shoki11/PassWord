@@ -169,44 +169,6 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
         
         ///データの保存
         @IBAction func SaveButton(_ sender: UIBarButtonItem) {
-            func save(){
-                if inputTitle.text!.isEmpty || inputId.text!.isEmpty || inputPass.text!.isEmpty{
-                    print("aralt")
-                    //alertの作成
-                    let alertController = UIAlertController(title: "保存に失敗しました。", message: "入力必須項目に空白があります。", preferredStyle: .alert)
-                    //OKbuttonの作成
-                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alertController.addAction(okAction)
-                    //alertを表示
-                    present(alertController, animated: true, completion: nil)
-                } else {
-                    //Passitemのインスタンス生成
-                    let newPassitem = Passitem()
-                    //textfieldの値を代入
-                    newPassitem.inputTitle = inputTitle.text!
-                    newPassitem.inputId = inputId.text!
-                    newPassitem.inputPass = inputPass.text!
-                    newPassitem.inputAd = inputAd.text!
-                    newPassitem.inputMemo = inputMemo.text!
-                    
-                    //インスタンスをRealmに保存
-                    do{
-                        let realm = try Realm()
-                        
-                        
-                        try realm.write(
-                        { () -> Void in
-                            realm.add(newPassitem, update: .modified)
-                            }
-                        )
-                        _=navigationController?.popViewController(animated: true)
-                        self.dismiss(animated: true, completion: nil)
-                    }catch{
-                        
-                    }
-                }
-                print("alert2")
-            }
             save()
         }
     }
@@ -231,29 +193,72 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
             }
             if num < 0 {
                 //titleの重複がある時alertを表示
-                func alert() {
-                    let data = realm.objects(Passitem.self)
-                    let newTitle = inputTitle.text!
-                    var count = 0
-                    
-                    for _ in data{
-                        let titleDate = data[count].inputTitle
-                        if titleDate == newTitle{
-                            //alertの作成
-                            let alertController = UIAlertController(title: "このタイトルは使用できません。", message: "既に同じタイトルが使用されています。", preferredStyle: .alert)
-                            //OkButton
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction!)in
-                                self.inputTitle.text = ""
-                            }
-                            )
-                            alertController.addAction(okAction)
-                            //alertを表示
-                            present(alertController, animated: true, completion: nil)
-                        }
-                        count += 1
-                    }
-                }
+                
                 alert()
+            }
+        }
+        
+        ///入力した値をRealmに保存 入力必須項目に空欄がある場合アラートを表示
+        func save(){
+            if inputTitle.text!.isEmpty || inputId.text!.isEmpty || inputPass.text!.isEmpty{
+                print("aralt")
+                //alertの作成
+                let alertController = UIAlertController(title: "保存に失敗しました。", message: "入力必須項目に空白があります。", preferredStyle: .alert)
+                //OKbuttonの作成
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alertController.addAction(okAction)
+                //alertを表示
+                present(alertController, animated: true, completion: nil)
+            } else {
+                //Passitemのインスタンス生成
+                let newPassitem = Passitem()
+                //textfieldの値を代入
+                newPassitem.inputTitle = inputTitle.text!
+                newPassitem.inputId = inputId.text!
+                newPassitem.inputPass = inputPass.text!
+                newPassitem.inputAd = inputAd.text!
+                newPassitem.inputMemo = inputMemo.text!
+                
+                //インスタンスをRealmに保存
+                do{
+                    let realm = try Realm()
+                    
+                    
+                    try realm.write(
+                    { () -> Void in
+                        realm.add(newPassitem, update: .modified)
+                        }
+                    )
+                    _=navigationController?.popViewController(animated: true)
+                    self.dismiss(animated: true, completion: nil)
+                }catch{
+                    
+                }
+            }
+            print("alert2")
+        }
+        
+        ///重複するタイトルがある場合アラートを表示
+        func alert() {
+            let data = realm.objects(Passitem.self)
+            let newTitle = inputTitle.text!
+            var count = 0
+            
+            for _ in data{
+                let titleDate = data[count].inputTitle
+                if titleDate == newTitle{
+                    //alertの作成
+                    let alertController = UIAlertController(title: "このタイトルは使用できません。", message: "既に同じタイトルが使用されています。", preferredStyle: .alert)
+                    //OkButton
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction!)in
+                        self.inputTitle.text = ""
+                    }
+                    )
+                    alertController.addAction(okAction)
+                    //alertを表示
+                    present(alertController, animated: true, completion: nil)
+                }
+                count += 1
             }
         }
 }
