@@ -31,9 +31,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        
         let data = realm.objects(Passitem.self)
+        
         TitleLabel.text = data[num].inputTitle // レコード取得になります
         IdLabel.text = data[num].inputId // レコード取得になります
         AdLabel.text = data[num].inputAd // レコード取得になります
@@ -42,12 +41,12 @@ class DetailViewController: UIViewController {
         let countTextPass = data[num].inputPass.count //レコード取得
         
         //*を用意
-        let maru = "＊"
+        let hidePassChar = "＊"
         
         //文字のカウントの分だけラベルに＊を足す
         //0から始まると１文字多くなるので１からスタート
         for _ in 1...countTextPass{
-            PassLabel.text! += maru
+            PassLabel.text! += hidePassChar
         }
     }
     
@@ -60,9 +59,9 @@ class DetailViewController: UIViewController {
         {
             print("call observer")
             //遷移先のStoryboardをMainStorybordに設定
-            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let topView: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             //遷移先をLockScreenViewControllerに設定
-            let LockScreen = storyboard.instantiateViewController(withIdentifier: "LockScreen")
+            let LockScreen = topView.instantiateViewController(withIdentifier: "LockScreen")
             //モーダルをfullscreenに変更
             LockScreen.modalPresentationStyle = .fullScreen
             print("go lockscreen from DetailView")
@@ -75,30 +74,11 @@ class DetailViewController: UIViewController {
     @IBAction func TitleTap(_ sender: Any) {
         //TitleLabelをTapしCopy
         UIPasteboard.general.string = TitleLabel.text!
-        
-        //タップした時テキストに変える
-//        TapResultLabel.text = "テキストをコピーしました"
-        
-        
         DispatchQueue.main.async {
             
-        Toast.show("テキストをコピーしました", self.view)
-            
-        // 結果を読み上げるコード
-        let utterWords = AVSpeechUtterance(string: "テキストをコピーしました")
-        
-        // 英語なら"en-us" 日本語なら"ja-jp"
-        utterWords.voice = AVSpeechSynthesisVoice(language: "ja-jp")
-        
-        let synthesizer = AVSpeechSynthesizer()
-        
-        synthesizer.speak(utterWords)
+            self.tapAction()
         
         }
-        //タップしてから3秒後にテキストを戻す
-//        Timer.scheduledTimer(withTimeInterval: 3, repeats: false){
-//            _ in self.TapResultLabel.text = "入力したテキストをタップでコピー"
-//        }
     }
     
     @IBAction func IdTap(_ sender: Any) {
@@ -106,37 +86,8 @@ class DetailViewController: UIViewController {
         
         DispatchQueue.main.async {
             
-        Toast.show("テキストをコピーしました", self.view)
-            
-        // 結果を読み上げるコード
-        let utterWords = AVSpeechUtterance(string: "テキストをコピーしました")
-        
-        // 英語なら"en-us" 日本語なら"ja-jp"
-        utterWords.voice = AVSpeechSynthesisVoice(language: "ja-jp")
-        
-        let synthesizer = AVSpeechSynthesizer()
-        
-        synthesizer.speak(utterWords)
-        
+            self.tapAction()
         }
-        //タップした時テキストに変える
-//        TapResultLabel.text = "Done"
-        
-//        TapResultLabel.font = UIFont.boldSystemFont(ofSize: 100)
-//
-//        TapResultLabel.textColor = UIColor.green
-        
-        //タップしてから3秒後にテキストを戻す
-//        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) {
-//
-//            _ in self.TapResultLabel.text = "入力したテキストをタップでコピー"
-//
-//            self.TapResultLabel.font = UIFont.boldSystemFont(ofSize: 25)
-//
-//            self.TapResultLabel.textColor = UIColor.black
-//
-//        }
-        
     }
     
     @IBAction func PassTap(_ sender: Any) {
@@ -146,27 +97,9 @@ class DetailViewController: UIViewController {
         
         DispatchQueue.main.async {
             
-        Toast.show("テキストをコピーしました", self.view)
-            
-        // 結果を読み上げるコード
-        let utterWords = AVSpeechUtterance(string: "テキストをコピーしました")
-        
-        // 英語なら"en-us" 日本語なら"ja-jp"
-        utterWords.voice = AVSpeechSynthesisVoice(language: "ja-jp")
-        
-        let synthesizer = AVSpeechSynthesizer()
-        
-        synthesizer.speak(utterWords)
+            self.tapAction()
         
         }
-        
-        //タップした時テキストに変える
-//        TapResultLabel.text = "テキストをコピーしました"
-        
-        //タップしてから3秒後にテキストを戻す
-//        Timer.scheduledTimer(withTimeInterval: 3, repeats: false){
-//            _ in self.TapResultLabel.text = "入力したテキストをタップでコピー"
-//        }
     }
     
     @IBAction func AdTap(_ sender: Any) {
@@ -174,6 +107,11 @@ class DetailViewController: UIViewController {
         
         DispatchQueue.main.async {
             
+            self.tapAction()
+        }
+    }
+    ///テキストがタップされた時の操作
+    func tapAction(){
         Toast.show("テキストをコピーしました", self.view)
             
         // 結果を読み上げるコード
@@ -185,15 +123,5 @@ class DetailViewController: UIViewController {
         let synthesizer = AVSpeechSynthesizer()
         
         synthesizer.speak(utterWords)
-        
-        }
-        
-        //タップした時テキストに変える
-//        TapResultLabel.text = "テキストをコピーしました"
-        
-        //タップしてから3秒後にテキストを戻す
-//        Timer.scheduledTimer(withTimeInterval: 3, repeats: false){
-//            _ in self.TapResultLabel.text = "入力したテキストをタップでコピー"
-//        }
     }
 }
