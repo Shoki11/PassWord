@@ -14,11 +14,11 @@ class PassWordSettingViewController: UIViewController,UITextFieldDelegate {
     
     //UserDefaultsのインスタンス生成
     let userDefaults = UserDefaults.standard
-    let dataStore = UserDefaults.standard.string(forKey: "DataStore")
+    let lockScreenPass = UserDefaults.standard.string(forKey: "LockScreenPass")
     
     
     
-    var testText:String = "Test"
+    var inputUserPass:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ class PassWordSettingViewController: UIViewController,UITextFieldDelegate {
         
         EnterPassWord.delegate = self
         
-        userDefaults.register(defaults: ["DataStore":""])
+        userDefaults.register(defaults: ["LockScreenPass":""])
         EnterPassWord.text = readData()
         
         //NumberPadにreturnKeyを付与
@@ -56,7 +56,7 @@ class PassWordSettingViewController: UIViewController,UITextFieldDelegate {
         
         @objc func onDidBecomeActive(_ notification: Notification?) {
         //observerの呼び出し
-        if !userDefaults.bool(forKey: "switchStatus") || dataStore == "" || dataStore == nil{
+        if !userDefaults.bool(forKey: "switchStatus") || lockScreenPass == "" || lockScreenPass == nil{
             print("don't call observer")
         }
         else
@@ -75,10 +75,10 @@ class PassWordSettingViewController: UIViewController,UITextFieldDelegate {
     }
     
     @objc func barButtonTapped(_ sender: UIBarButtonItem) -> Bool {
-        testText = EnterPassWord.text!
+        inputUserPass = EnterPassWord.text!
         // 各textFieldのキーボードを閉じる
         EnterPassWord.resignFirstResponder()
-        saveData(str: testText)
+        saveData(str: inputUserPass)
         return true
     }
     
@@ -86,32 +86,24 @@ class PassWordSettingViewController: UIViewController,UITextFieldDelegate {
     //dataの保存
     func  saveData(str: String){
         
-        userDefaults.set(str, forKey: "DataStore")
+        userDefaults.set(str, forKey: "LockScreenPass")
     }
     
     //Dataの呼び出し
     func readData() -> String{
         
-        let str: String = userDefaults.object(forKey: "DataStore")as! String
+        let str: String = userDefaults.object(forKey: "LockScreenPass")as! String
         return str
     }
     
     @IBAction func removeData(_ sender: Any) {
         //userDefaultsの削除
-        userDefaults.removeObject(forKey: "DataStore")
+        userDefaults.removeObject(forKey: "LockScreenPass")
         EnterPassWord.text = ""
         
         
     }
 }
 
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- // Get the new view controller using segue.destination.
- // Pass the selected object to the new view controller.
- }
- */
+
 

@@ -26,7 +26,7 @@ class LockScreenViewController: UIViewController {
         //Dataの呼び出し
         func readData() -> String{
             
-            let str: String = userDefaults.object(forKey: "DataStore")as! String
+            let str: String = userDefaults.object(forKey: "LockScreenPass")as! String
             return str
             
         }
@@ -99,7 +99,7 @@ class LockScreenViewController: UIViewController {
     }
     @IBAction func DecideButton(_ sender: Any) {
         
-        let PassKey = UserDefaults.standard.string(forKey: "DataStore")
+        let PassKey = UserDefaults.standard.string(forKey: "LockScreenPass")
         
         if Inputstr == PassKey{
             
@@ -136,13 +136,5 @@ class LockScreenViewController: UIViewController {
     }
 }
 
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- // Get the new view controller using segue.destination.
- // Pass the selected object to the new view controller.
- }
- */
+
 
