@@ -10,7 +10,7 @@ import UIKit
 
 class LaunchScreenViewController: UIViewController {
     let userDefaults = UserDefaults.standard
-    let dataStore = UserDefaults.standard.string(forKey: "DataStore")
+    let lockScreenPass = UserDefaults.standard.string(forKey: "LockScreenPass")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +19,9 @@ class LaunchScreenViewController: UIViewController {
                 
        override func viewDidAppear(_ animated: Bool) {
             //passがないならture
-            if !userDefaults.bool(forKey: "switchStatus") || dataStore == "" || dataStore == nil {
+            if !userDefaults.bool(forKey: "switchStatus") || lockScreenPass == "" || lockScreenPass == nil {
                 
-                print(userDefaults.bool(forKey: "switcjStatus"))
+                print(userDefaults.bool(forKey: "switchStatus"))
                 //遷移先のStoryboardを設定
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 //遷移先のNavigationControllerを設定
@@ -48,13 +48,4 @@ class LaunchScreenViewController: UIViewController {
     }
 
 
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- // Get the new view controller using segue.destination.
- // Pass the selected object to the new view controller.
- }
- */
 

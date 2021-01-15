@@ -25,9 +25,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         func  readSwitchStatus() {
-            let ud = UserDefaults.standard
-            ud.register(defaults: ["switchStatus":true])
-            let TurnData = ud.bool(forKey: "switchStatus")
+            let userDefaults = UserDefaults.standard
+            userDefaults.register(defaults: ["switchStatus":true])
+            let TurnData = userDefaults.bool(forKey: "switchStatus")
 
             
         

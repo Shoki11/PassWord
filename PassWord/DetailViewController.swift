@@ -12,7 +12,7 @@ import AVFoundation
 
 class DetailViewController: UIViewController {
     let userDefaults = UserDefaults.standard
-    let dataStore = UserDefaults.standard.string(forKey: "DataStore")
+    let lockScreenPass = UserDefaults.standard.string(forKey: "LockScreenPass")
     
     
     //Realmの使用を宣言する文
@@ -52,7 +52,7 @@ class DetailViewController: UIViewController {
     
     @objc func onDidBecomeActive(_ notification: Notification?) {
         //observerの呼び出し
-        if !userDefaults.bool(forKey: "switchStatus") || dataStore == "" || dataStore == nil{
+        if !userDefaults.bool(forKey: "switchStatus") || lockScreenPass == "" || lockScreenPass == nil{
             print("don't call observer")
         }
         else
