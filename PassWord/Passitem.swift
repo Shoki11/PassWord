@@ -3,7 +3,7 @@
 //  PassWord
 //
 //  Created by cmStudent on 2020/08/19.
-//  Copyright © 2020 20cm0120. All rights reserved.
+//  Copyright © 2020 20cm0119. All rights reserved.
 //
 
 import Foundation

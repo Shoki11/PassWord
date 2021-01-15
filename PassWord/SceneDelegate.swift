@@ -3,7 +3,7 @@
 //  PassWord
 //
 //  Created by cmStudent on 2020/07/21.
-//  Copyright © 2020 20cm0120. All rights reserved.
+//  Copyright © 2020 20cm0119. All rights reserved.
 //
 
 import UIKit
@@ -18,6 +18,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+
+            
+            
+        
+        
+        func  readSwitchStatus() {
+            let ud = UserDefaults.standard
+            ud.register(defaults: ["switchStatus":true])
+            let TurnData = ud.bool(forKey: "switchStatus")
+
+            
+        
+            
+            if TurnData == true {
+                // スイッチがオンの時
+                let storyboard = UIStoryboard(name: "On", bundle: Bundle.main)
+                let rootViewController = storyboard.instantiateViewController(withIdentifier: "LockScreen")
+                self.window?.rootViewController = rootViewController
+                self.window?.backgroundColor = UIColor.white
+                self.window?.makeKeyAndVisible()
+
+            } else {
+                // スイッチがオフの時
+                let storyboard = UIStoryboard(name: "Off", bundle: Bundle.main)
+                let rootViewController = storyboard.instantiateViewController(withIdentifier: "Navigation")
+                self.window?.rootViewController = rootViewController
+                self.window?.backgroundColor = UIColor.white
+                self.window?.makeKeyAndVisible()
+                
+            }
+            
+            
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

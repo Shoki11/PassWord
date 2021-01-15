@@ -3,7 +3,7 @@
 //  PassWord
 //
 //  Created by cmStudent on 2020/07/21.
-//  Copyright © 2020 20cm0120. All rights reserved.
+//  Copyright © 2020 20cm0119. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,15 @@ import RealmSwift
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
-    //追加
+    let userDefaults = UserDefaults.standard
+    let dataStore = UserDefaults.standard.string(forKey: "DataStore")
+    
+    //スイッチのオンオフ
+    func readData() -> Int {
+        let TurnData = userDefaults.object(forKey: "turnData") as! Int
+        return TurnData
+    }
+    
     var num: Int = 0
     var itemList: Results<Passitem>!
     
@@ -28,12 +36,40 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             let realm = try Realm()
             itemList = realm.objects(Passitem.self)
             
-            print("saved")
+            print("Realm saved")
         } catch {
-            print("save is faild")
+            print("Realm save is faild")
         }
-        
+    
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(ViewController.onDidBecomeActive(_:)),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
     }
+    
+    //バックグラウンドからの復帰
+    @objc func onDidBecomeActive(_ notification: Notification?) {
+        //observerの呼び出し
+        if !userDefaults.bool(forKey: "switchStatus") || dataStore == "" || dataStore == nil{
+            print("don't call observer")
+        }
+        else
+        {
+            print("call observer")
+            //遷移先のStoryboardをMainStorybordに設定
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            //遷移先をLockScreenViewControllerに設定
+            let LockScreen = storyboard.instantiateViewController(withIdentifier: "LockScreen")
+            //モーダルをfullscreenに変更
+            LockScreen.modalPresentationStyle = .fullScreen
+            print("go lockscreen from viewController")
+            //遷移する
+            self.present(LockScreen, animated: true, completion: nil)
+        }
+    }
+    
     //tableviewの表示
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
@@ -51,6 +87,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         super.viewWillAppear(animated)
         PassTableView.reloadData()
+        
     }
     
     //パスワードの追加
@@ -84,14 +121,16 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         //編集ボタン
         let EditTitle = UIContextualAction(style: .destructive, title: "編集") {  (contextualAction, view, boolValue) in
             _ = NSLocalizedString("Edit", comment: "Edit action")
-           
+            
+            
             //保存画面に画面遷移
             //storybordのインスタンス生成
             let storybord: UIStoryboard = self.storyboard!
+            
             //遷移先のviewControllerのインスタンス生成
             let viewController = storybord.instantiateViewController(withIdentifier: "settingViewController") as! SettingViewController
             self.navigationController?.pushViewController( viewController , animated: true)
-            
+            viewController.num = indexPath.row
         }
         
         EditTitle.backgroundColor = .green
@@ -119,6 +158,5 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let next = segue.destination as? DetailViewController
         next?.num = num
     }
-    
 }
 
