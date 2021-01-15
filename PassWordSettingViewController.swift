@@ -23,7 +23,6 @@ class PassWordSettingViewController: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view
         //枠線の太さ
         EnterPassWord.layer.borderWidth = 2
         //枠線の色
@@ -53,7 +52,6 @@ class PassWordSettingViewController: UIViewController,UITextFieldDelegate {
         self.EnterPassWord.keyboardType = UIKeyboardType.numberPad
     }
     
-        
         @objc func onDidBecomeActive(_ notification: Notification?) {
         //observerの呼び出し
         if !userDefaults.bool(forKey: "switchStatus") || lockScreenPass == "" || lockScreenPass == nil{
@@ -62,9 +60,9 @@ class PassWordSettingViewController: UIViewController,UITextFieldDelegate {
         else
         {
             print("call observer")
-        //遷移先のStoryboardをMainStorybordに設定
+        ///遷移先のStoryboardをMainStorybordに設定
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        //遷移先をLockScreenViewControllerに設定
+        ///遷移先をLockScreenViewControllerに設定
         let LockScreen = storyboard.instantiateViewController(withIdentifier: "LockScreen")
         //モーダルをfullscreenに変更
         LockScreen.modalPresentationStyle = .fullScreen
@@ -83,19 +81,19 @@ class PassWordSettingViewController: UIViewController,UITextFieldDelegate {
     }
     
     
-    //dataの保存
+    //ユーザーのロック画面用のパスワードデータの保存
     func  saveData(str: String){
         
         userDefaults.set(str, forKey: "LockScreenPass")
     }
     
-    //Dataの呼び出し
+    ///ユーザーのロック画面用のパスワードデータの呼び出し
     func readData() -> String{
         
         let str: String = userDefaults.object(forKey: "LockScreenPass")as! String
         return str
     }
-    
+    ///ユーザーのロック画面用のパスワードデータを削除
     @IBAction func removeData(_ sender: Any) {
         //userDefaultsの削除
         userDefaults.removeObject(forKey: "LockScreenPass")

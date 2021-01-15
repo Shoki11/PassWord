@@ -22,8 +22,7 @@ class LockScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //Dataの呼び出し
+        ///Dataの呼び出し
         func readData() -> String{
             
             let str: String = userDefaults.object(forKey: "LockScreenPass")as! String
@@ -113,14 +112,14 @@ class LockScreenViewController: UIViewController {
             print("OK")
             
         }else{
-            //どのバイブレーションか
+            ///どのバイブレーションか
             let systemSoundID = SystemSoundID(kSystemSoundID_Vibrate)
             //くり返し用のコールバック
             AudioServicesAddSystemSoundCompletion(systemSoundID, nil, nil, {(systemSoundID, nil) -> Void in}, nil)
             AudioServicesPlaySystemSound(systemSoundID)
             
             let alertController = UIAlertController(title: "パスワードが違います。", message: "もう一度入力してください。", preferredStyle: .alert)
-            //OkButton
+            ///OkButton
             let okAction = UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction!)in
                 self.Inputstr = ""
                 self.Inputast = ""

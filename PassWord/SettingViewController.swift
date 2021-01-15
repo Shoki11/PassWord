@@ -141,7 +141,7 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
             print("Notificationを発行")
         }
         
-        //      /// キーボードが表示時に画面をずらす。
+             /// キーボードが表示時に画面をずらす。
         @objc func keyboardWillShow(_ notification: Notification?) {
             if self.activeTextView != nil{
                 guard let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue,
@@ -167,7 +167,7 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
         
         //********** キーボードの設定　***********//
         
-        //データの保存
+        ///データの保存
         @IBAction func SaveButton(_ sender: UIBarButtonItem) {
             func save(){
                 if inputTitle.text!.isEmpty || inputId.text!.isEmpty || inputPass.text!.isEmpty{
