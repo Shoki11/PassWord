@@ -17,6 +17,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     //スイッチのオンオフ
     func readData() -> Int {
         let TurnData = userDefaults.object(forKey: "turnData") as! Int
+        print("hello")
         return TurnData
     }
     
