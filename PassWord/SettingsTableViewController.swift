@@ -34,7 +34,7 @@ class SettingsTableViewController: UITableViewController {
         readSwitchStatus()
     }
     
-    //バックグラウンドからの復帰
+    ///バックグラウンドからの復帰
     @objc func onDidBecomeActive(_ notification: Notification?) {
         
         //observerの呼び出し
@@ -85,10 +85,12 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
+    ///起動時パスワードのオン/オフを保存
     func saveSwitchStatus() {
         userDefaults.set(switchStatus, forKey: "switchStatus")
     }
     
+    ///起動時パスワードのオン/オフを読み込み
     func  readSwitchStatus() {
         userDefaults.register(defaults: ["switchStatus":false])
         switchStatus = userDefaults.bool(forKey: "switchStatus")
