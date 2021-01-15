@@ -142,7 +142,7 @@ class SettingViewController: UIViewController,UITextFieldDelegate,UITextViewDele
             print("Notificationを発行")
         }
         
-             /// キーボードが表示時に画面をずらす。
+        /// キーボードが表示時に画面をずらす。
         @objc func keyboardWillShow(_ notification: Notification?) {
             if self.activeTextView != nil{
                 guard let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue,
