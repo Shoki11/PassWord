@@ -14,7 +14,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     let userDefaults = UserDefaults.standard
     let lockScreenPass = UserDefaults.standard.string(forKey: "LockScreenPass")
     
-    //スイッチのオンオフ
+    ///スイッチのオンオフ
     func readData() -> Int {
         let TurnData = userDefaults.object(forKey: "turnData") as! Int
         return TurnData
@@ -27,7 +27,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         PassTableView.delegate = self
         PassTableView.dataSource = self
         
@@ -49,7 +49,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         )
     }
     
-    //バックグラウンドからの復帰
+    ///バックグラウンドからの復帰
     @objc func onDidBecomeActive(_ notification: Notification?) {
         //observerの呼び出し
         if !userDefaults.bool(forKey: "switchStatus") || lockScreenPass == "" || lockScreenPass == nil{
@@ -70,7 +70,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
     }
     
-    //tableviewの表示
+    ///tableviewの表示
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
     }
@@ -82,7 +82,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return cell
         
     }
-    // 画面が表示される直前にtableViewを更新
+    /// 画面が表示される直前にtableViewを更新
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -100,13 +100,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         viewController.num = -1
     }
     
-    //swipeAction（消去と編集）
-    //消去ボタン
+    ///swipeAction（消去と編集）
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deleteTitle = UIContextualAction(style: .destructive, title: "消去") {  (contextualAction, view, boolValue) in
             _ = NSLocalizedString("Delete", comment: "Delete action")
             
+            //消去ボタン
             //Realm内のデータを削除
             do{
                 let realm = try Realm()
@@ -140,7 +141,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return swipeActions
     }
     
-    //cellをタップした時
+    ///cellをタップした時
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // セルの選択を解除
@@ -153,7 +154,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     // セグエ実行前処理
-    //numのデータの受け渡し
+    ///numのデータの受け渡し
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let next = segue.destination as? DetailViewController
         next?.num = num
